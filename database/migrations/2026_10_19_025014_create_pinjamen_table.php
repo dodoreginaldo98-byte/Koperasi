@@ -6,24 +6,25 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
-   public function up()
-{
-    Schema::create('pinjaman', function (Blueprint $table) {
-        $table->id();
-        $table->foreignId('anggota_id')->constrained('anggota')->onDelete('cascade');
-        $table->date('tanggal_pinjaman');
-        $table->integer('jumlah_pinjaman');
-        $table->timestamps();
-    });
-}
-    /**
-     * Reverse the migrations.
-     */
+    public function up(): void
+    {
+        Schema::create('pinjaman', function (Blueprint $table) {
+            $table->id();
+            
+            // Gunakan foreignId agar tipe data otomatis menyesuaikan (unsignedBigInteger)
+            $table->foreignId('anggota_id')->constrained('anggotas')->onDelete('cascade');
+            
+            // Kolom-kolom lainnya untuk tabel pinjaman...
+            $table->decimal('jumlah_pinjaman', 15, 2);
+            $table->date('tanggal_pinjaman');
+            $table->enum('status', ['pending', 'disetujui', 'lunas'])->default('pending');
+            
+            $table->timestamps();
+        });
+    }
+
     public function down(): void
     {
-        Schema::dropIfExists('pinjamen');
+        Schema::dropIfExists('pinjaman');
     }
 };

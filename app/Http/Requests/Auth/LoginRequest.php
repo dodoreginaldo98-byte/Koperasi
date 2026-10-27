@@ -41,20 +41,24 @@ class LoginRequest extends FormRequest
     public function authenticate(): void
     {
         $this->ensureIsNotRateLimited();
- $credentials = $this->only('email', 'password');
- $credentials['is_active'] = true;
- if (! \Illuminate\Support\Facades\Auth::attempt(
- $credentials,
- $this->boolean('remember')
- )) {
- \Illuminate\Support\Facades\RateLimiter::hit(
- $this->throttleKey()
- );
- throw \Illuminate\Validation\ValidationException::withMessages([
- 'email' => trans('auth.failed'),
- ]);
- }
- \Illuminate\Support\Facades\RateLimiter::clear($this->throttleKey());
+
+        $credentials = $this->only('email', 'password');
+        // $credentials['is_active'] = true; // Dinonaktifkan sementara karena kolom belum ada di database
+
+        if (! \Illuminate\Support\Facades\Auth::attempt(
+            $credentials,
+            $this->boolean('remember')
+        )) {
+            \Illuminate\Support\Facades\RateLimiter::hit(
+                $this->throttleKey()
+            );
+
+            throw \Illuminate\Validation\ValidationException::withMessages([
+                'email' => trans('auth.failed'),
+            ]);
+        }
+
+        \Illuminate\Support\Facades\RateLimiter::clear($this->throttleKey());
     }
 
     /**
