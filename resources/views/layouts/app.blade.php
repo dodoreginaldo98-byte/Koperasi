@@ -122,6 +122,14 @@
                             </a>
                         </li>
 
+                        <li class="nav-item">
+                             <a href="{{ route('pinjaman.index') }}"
+                                  class="nav-link {{ request()->routeIs('pinjaman.*') ? 'active' : '' }}">
+                                 <i class="nav-icon fas fa-hand-holding-usd"></i>
+                           <p>Pinjaman</p>
+                      </a>
+                    </li>
+
                         <!-- Manajemen User: Admin -->
                         @if(auth()->user()?->role === 'admin')
                             <li class="nav-item">
