@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
+use App\Services\AngsuranService;
 
 class PinjamanController extends Controller
 {
@@ -226,28 +227,39 @@ class PinjamanController extends Controller
     /**
      * Mencairkan pinjaman yang telah disetujui.
      */
-    public function disburse(Pinjaman $pinjaman)
-    {
-        DB::transaction(function () use ($pinjaman) {
-            $data = Pinjaman::whereKey($pinjaman->id)
-                ->lockForUpdate()
-                ->firstOrFail();
+    public function disburse(
+    Pinjaman $pinjaman,
+    AngsuranService $angsuranService
+) {
+    DB::transaction(function () use (
+        $pinjaman,
+        $angsuranService
+    ) {
+        $data = Pinjaman::whereKey($pinjaman->id)
+            ->lockForUpdate()
+            ->firstOrFail();
 
-            if ($data->status !== 'disetujui') {
-                throw ValidationException::withMessages([
-                    'status' => 'Hanya pinjaman yang disetujui dapat dicairkan.',
-                ]);
-            }
-
-            $data->update([
-                'status' => 'dicairkan',
-                'disbursed_at' => now(),
+        if ($data->status !== 'disetujui') {
+            throw ValidationException::withMessages([
+                'status' => 'Hanya pinjaman disetujui yang dapat dicairkan.',
             ]);
-        });
+        }
 
-        return back()->with('success', 'Pinjaman berhasil dicairkan.');
-    }
+        // Buat seluruh jadwal angsuran
+        $angsuranService->generate($data);
 
+        // Ubah status pinjaman
+        $data->update([
+            'status' => 'dicairkan',
+            'disbursed_at' => now(),
+        ]);
+    });
+
+    return back()->with(
+        'success',
+        'Pinjaman berhasil dicairkan dan jadwal angsuran dibuat.'
+    );
+}
     /**
      * Mencatat pelunasan.
      */

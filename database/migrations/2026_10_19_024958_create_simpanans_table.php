@@ -8,11 +8,11 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('simpanan', function (Blueprint $table) {
+        Schema::create('simpanans', function (Blueprint $table) {
             $table->id();
 
             $table->foreignId('anggota_id')
-                ->constrained('anggota')
+                ->constrained('anggotas')
                 ->restrictOnDelete();
 
             $table->string('kode_transaksi', 40)->unique();
@@ -57,6 +57,6 @@ return new class extends Migration
 
     public function down(): void
     {
-        Schema::dropIfExists('simpanan');
+        Schema::dropIfExists('simpanans');
     }
 };

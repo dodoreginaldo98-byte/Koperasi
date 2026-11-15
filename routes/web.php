@@ -6,12 +6,25 @@ use App\Http\Controllers\SimpananController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\TransaksiController;
 use App\Http\Controllers\PinjamanController;
+use App\Http\Controllers\AngsuranController;
 
 // Halaman awal: arahkan sesuai status login
 Route::get('/', function () {
     return auth()->check()
         ? redirect()->route('dashboard')
         : redirect()->route('login');
+});
+
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/angsuran', [AngsuranController::class, 'index'])
+        ->name('angsuran.index');
+
+    Route::get('/angsuran/{angsuran}', [AngsuranController::class, 'show'])
+        ->name('angsuran.show');
+
+    Route::post('/angsuran/{angsuran}/bayar', [AngsuranController::class, 'pay'])
+        ->name('angsuran.pay');
 });
 
 Route::get('/transaksi', [TransaksiController::class, 'index'])->name('transaksi.index');

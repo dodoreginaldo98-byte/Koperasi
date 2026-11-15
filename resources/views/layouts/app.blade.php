@@ -123,6 +123,16 @@
                         </li>
 
                         <li class="nav-item">
+                        <a href="{{ route('angsuran.index') }}"
+                            class="nav-link {{ request()->routeIs('angsuran.*') ? 'active' : '' }}">
+                                  <i class="nav-icon fas fa-money-check-alt"></i>
+                               <p>
+                            Manajemen Angsuran
+                                 </p>
+                              </a>
+                        </li>
+
+                        <li class="nav-item">
                              <a href="{{ route('pinjaman.index') }}"
                                   class="nav-link {{ request()->routeIs('pinjaman.*') ? 'active' : '' }}">
                                  <i class="nav-icon fas fa-hand-holding-usd"></i>
