@@ -227,10 +227,9 @@ class PinjamanController extends Controller
     /**
      * Mencairkan pinjaman yang telah disetujui.
      */
-    public function disburse(
-    Pinjaman $pinjaman,
-    AngsuranService $angsuranService
-) {
+    public function disburse(Pinjaman $pinjaman,AngsuranService $angsuranService)
+     {
+         $angsuranService->generateSchedule($pinjaman);
     DB::transaction(function () use (
         $pinjaman,
         $angsuranService

@@ -132,6 +132,16 @@
                               </a>
                         </li>
 
+                        <li class="nav-header">KEUANGAN</li>
+
+                            <li class="nav-item">
+                            <a href="{{ route('laporan.pinjaman') }}"
+                                  class="nav-link {{ request()->routeIs('laporan.*') ? 'active' : '' }}">
+                              <i class="nav-icon fas fa-chart-bar"></i>
+                         <p>Laporan Pinjaman</p>
+                     </a>
+                </li>
+
                         <li class="nav-item">
                              <a href="{{ route('pinjaman.index') }}"
                                   class="nav-link {{ request()->routeIs('pinjaman.*') ? 'active' : '' }}">

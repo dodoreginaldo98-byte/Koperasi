@@ -14,6 +14,8 @@ class PembayaranAngsuran extends Model
         'jumlah_bayar',
         'dibayar_oleh',
         'keterangan',
+        'pokok_dibayar',
+        'bunga_dibayar',
     ];
 
     protected function casts(): array
@@ -21,6 +23,8 @@ class PembayaranAngsuran extends Model
         return [
             'tanggal_bayar' => 'date',
             'jumlah_bayar' => 'decimal:2',
+            'pokok_dibayar' => 'decimal:2',
+            'bunga_dibayar' => 'decimal:2',
         ];
     }
 

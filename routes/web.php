@@ -7,6 +7,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\TransaksiController;
 use App\Http\Controllers\PinjamanController;
 use App\Http\Controllers\AngsuranController;
+use App\Http\Controllers\LaporanController;
 
 // Halaman awal: arahkan sesuai status login
 Route::get('/', function () {
@@ -69,6 +70,25 @@ Route::middleware(['auth'])->group(function () {
         '/pinjaman/{pinjaman}/cancel',
         [PinjamanController::class, 'cancel']
     )->name('pinjaman.cancel');
+});
+
+
+Route::middleware(['auth'])->group(function () {
+    // Laporan pinjaman
+    Route::get('/laporan/pinjaman', [LaporanController::class, 'index'])
+        ->name('laporan.pinjaman');
+
+    // Cetak laporan PDF
+    Route::get('/laporan/pinjaman/pdf', [LaporanController::class, 'cetakLaporan'])
+        ->name('laporan.pinjaman.pdf');
+
+    // Cetak kartu angsuran
+    Route::get('/laporan/kartu-angsuran/{pinjaman}', [LaporanController::class, 'kartuAngsuran'])
+        ->name('laporan.kartu');
+
+    // Cetak kwitansi
+    Route::get('/laporan/kwitansi/{pembayaran}', [LaporanController::class, 'kwitansi'])
+        ->name('laporan.kwitansi');
 });
 
 Route::middleware('role:admin')->group(function () {

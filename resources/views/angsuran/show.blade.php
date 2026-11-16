@@ -158,16 +158,17 @@
                     <div class="card-body">
                         <div class="table-responsive">
                             <table class="table table-bordered">
-                                <thead>
+                               <thead>
                                     <tr>
-                                        <th>No</th>
-                                        <th>Kode Pembayaran</th>
-                                        <th>Tanggal</th>
-                                        <th>Jumlah</th>
-                                        <th>Petugas</th>
-                                        <th>Keterangan</th>
-                                    </tr>
-                                </thead>
+                                      <th>No</th>
+                                     <th>Kode Pembayaran</th>
+                                     <th>Tanggal</th>
+                                     <th>Jumlah</th>
+                                     <th>Petugas</th>
+                                    <th>Keterangan</th>
+                                     <th>Aksi</th>
+                                </tr>
+                            </thead>
 
                                 <tbody>
                                     @forelse($angsuran->pembayarans as $index => $pembayaran)
@@ -189,7 +190,14 @@
                                         </tr>
                                     @empty
                                         <tr>
-                                            <td colspan="6" class="text-center">
+                                            <td>
+                                    <a href="{{ route('laporan.kwitansi', $pembayaran->id) }}"
+                                     class="btn btn-danger btn-sm"
+                                     target="_blank">
+                                     <i class="fas fa-file-pdf"></i> Kwitansi
+                                     </a>
+                                </td>
+                                            <td colspan="7" class="text-center">
                                                 Belum ada pembayaran.
                                             </td>
                                         </tr>

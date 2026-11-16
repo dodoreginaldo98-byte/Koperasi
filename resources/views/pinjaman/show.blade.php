@@ -190,6 +190,15 @@
 
             <hr>
 
+            @if(in_array($pinjaman->status, ['dicairkan', 'lunas']))
+                <a href="{{ route('laporan.kartu', $pinjaman->id) }}"
+                    class="btn btn-danger"
+                    target="_blank">
+                    <i class="fas fa-file-pdf"></i>
+                    Cetak Kartu Angsuran
+                </a>
+            @endif
+
             <a href="{{ route('pinjaman.index') }}"
                 class="btn btn-secondary">
                 <i class="fas fa-arrow-left"></i> Kembali
