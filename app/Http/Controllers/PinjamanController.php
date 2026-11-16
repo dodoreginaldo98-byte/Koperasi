@@ -229,7 +229,6 @@ class PinjamanController extends Controller
      */
     public function disburse(Pinjaman $pinjaman,AngsuranService $angsuranService)
      {
-         $angsuranService->generateSchedule($pinjaman);
     DB::transaction(function () use (
         $pinjaman,
         $angsuranService
